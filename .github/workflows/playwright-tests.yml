@@ -1,24 +1,29 @@
-name: Run Playwright Tests and Publish Allure Report
+name: CI
 
 on: [push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm install
-      - name: Run Playwright tests
-        run: npx playwright test
-      - name: Generate Allure report
-        run: npx allure generate allure-results --clean -o allure-report
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+    - uses: actions/checkout@v3  # Update to use the latest version of checkout
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3  # Update to use the latest version of setup-node
+      with:
+        node-version: '16'  # Pin to Node.js 16 or change to 14 or 20 if compatible
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Install Playwright
+      run: npx playwright install
+
+    - name: Grant execute permissions to Playwright
+      run: chmod +x node_modules/.bin/*
+
+    - name: Run Playwright tests
+      run: npx playwright test
+
+    # If you want to generate and publish the Allure report, continue with those steps here
