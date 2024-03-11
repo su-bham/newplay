@@ -1,4 +1,4 @@
-name: Playwright CI
+name: Run Playwright Tests and Publish Allure Report
 
 on: [push]
 
@@ -10,16 +10,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16' # Use the Node.js version compatible with your project
+          node-version: '16'
       - name: Install dependencies
         run: npm install
       - name: Run Playwright tests
         run: npx playwright test
-        - name: Generate Allure report
-        run: allure generate allure-results --clean -o allure-report
-      - name: Deploy Allure report to GitHub Pages
+      - name: Generate Allure report
+        run: npx allure generate allure-results --clean -o allure-report
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
-
