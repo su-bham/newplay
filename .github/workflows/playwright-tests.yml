@@ -12,7 +12,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3  # Update to use the latest version of setup-node
       with:
-        node-version: '16'  # Pin to Node.js 16 or change to 14 or 20 if compatible
+        node-version: '20'  # Pin to Node.js 16 or change to 14 or 20 if compatible
 
     - name: Install dependencies
       run: npm install
